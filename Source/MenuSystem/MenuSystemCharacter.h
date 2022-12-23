@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "MenuSystemCharacter.generated.h"
 
 
@@ -62,5 +63,17 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+public:
+	IOnlineSessionPtr OnlineSessionInterface;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void CreateGameSession() const;
+
+	void OnCreateSessionComplete(const FName SessionName, const bool bWasSuccessful);
+
+private:
+	FOnCreateSessionCompleteDelegate CreateSessionCompleteDelegate;
 };
 
